@@ -2,6 +2,7 @@ package com.wooster.contapp.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,21 +22,41 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1")
 public class CityController {
 
 	@Autowired
-    private CityRepository cityRepos;
+	private CityRepository cityRepos;
 
-    @GetMapping("/cities")
-    public List <City> getAllCities() {
-        return cityRepos.findAll();
-    }
-    
-    @GetMapping("/cities/{cityid}")
-    public ResponseEntity<Optional<City>>  getCityById(@PathVariable(value = "cityid") UUID cityId) {
+	@GetMapping("/cities")
+	public List <City> getAllCities() {
+		return cityRepos.findAll();
+	}
 
-    	Optional<City>  city = cityRepos.findById(cityId);
-        return ResponseEntity.ok().body(city);
-    }
+	@GetMapping("/cities/{cityid}")
+	public ResponseEntity<Optional<City>>  getCityById(@PathVariable(value = "cityid") UUID cityId) {
+		Optional<City>  city = cityRepos.findById(cityId);
+
+		if (city == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(city, HttpStatus.OK);
+	}
+
+	@PostMapping("/cities")
+	public City addCity(@RequestBody City city) {
+		return cityRepos.save(city);
+	}
+
+	@PutMapping("/cities")
+	public City updateCity(@RequestBody City city) {
+		return cityRepos.save(city);
+	}
+
+	@DeleteMapping("/cities/{cityId}")
+	public void deletCity(@PathVariable(value = "cityid") UUID cityId) {
+		cityRepos.deleteById(cityId);
+	}
 }
