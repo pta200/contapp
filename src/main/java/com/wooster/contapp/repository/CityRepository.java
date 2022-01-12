@@ -9,8 +9,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * City JPA repository
+ * @author pta200
+ *
+ */
 @Repository
-public interface  CityRepository extends JpaRepository<City, UUID>{
+public interface CityRepository extends JpaRepository<City, UUID>{
 	
 	List <City> findAll();
 	Optional<City> findById(UUID cityId);
