@@ -1,12 +1,12 @@
 package com.wooster.contapp.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.UUID;
 
@@ -21,8 +21,7 @@ import java.util.UUID;
 public class City {
 
 	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name="cityid")
 	private UUID citId;
 
@@ -38,6 +37,15 @@ public class City {
 	@Column(name="country")
 	private String country;
 
+	public City() {
+	}
+
+	public City(String city, String state, String province, String country) {
+		this.city = city;
+		this.state = state;
+		this.province = province;
+		this.country = country;
+	}
 
 	public UUID getId() {
 		return citId;
@@ -86,6 +94,5 @@ public class City {
 				+ ", getProvince()=" + getProvince() + ", getCountry()=" + getCountry() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
-
-	
+ 
 }
