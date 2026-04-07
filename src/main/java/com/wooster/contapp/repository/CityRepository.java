@@ -19,5 +19,6 @@ public interface CityRepository extends JpaRepository<City, UUID>{
 	
 	List <City> findAll();
 	Optional<City> findById(UUID cityId);
+	Optional<City> findByCountry(String country);
 
 }

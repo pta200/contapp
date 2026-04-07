@@ -38,6 +38,17 @@ public class CityController {
 		return cityRepos.findAll();
 	}
 
+	@GetMapping("/cities/{country}")
+	public ResponseEntity<Optional<City>> findByCountry(@PathVariable(value = "country") String country) {
+		Optional<City>  city = cityRepos.findByCountry(country);
+
+		if (city == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(city, HttpStatus.OK);
+	}
+
 	@GetMapping("/cities/{cityid}")
 	public ResponseEntity<Optional<City>>  getCityById(@PathVariable(value = "cityid") UUID cityId) {
 		Optional<City>  city = cityRepos.findById(cityId);
